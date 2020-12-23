@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h4 class="d-inline">Product</h4>
                     <div class="float-right">
-                        <a href="" class="btn btn-sm btn-success">
+                        <a href="{{ route('admin.management.product.create') }}" class="btn btn-sm btn-success">
                             <i class="fas fa-plus"></i> New
                         </a>
                     </div>
@@ -46,13 +46,15 @@
                 {
                     data: null,
                     render: function ( data, type, row ) {
+                        var urlEdit = "{{ route('admin.management.product.index') }}/" + data.id + "/edit";
+                        var urlDetail = "{{ route('admin.management.product.index') }}/" + data.id;
                         return `
                         <div class="d-block text-center">
                             <div class="btn-group mb-3" role="group">
-                                <a href="" class="btn btn-sm btn-icon text-white btn-warning">
+                                <a href="${urlEdit}" class="btn btn-sm btn-icon text-white btn-warning">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <form method="post" action="">
+                                <form method="post" action="${urlDetail}">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-icon text-white btn-danger"><i class="fas fa-trash"></i></button>

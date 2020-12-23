@@ -3,20 +3,14 @@
 namespace Extension\AdminManagement\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+use Viandwi24\LaravelExtension\Facades\Hook;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->ajax() || $request->wantsJson())
-        {
-            $products = Product::query();
-            return DataTables::of($products)->make(true);
-        }
-        return view('AdminManagement::product.index');
+        return Hook::applyFilter('admin_management_product_index', '', $request);
     }
 
     /**
@@ -24,9 +18,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('AdminManagement::product.create'); 
+        return Hook::applyFilter('admin_management_product_create', '', $request);
     }
 
     /**
@@ -37,18 +31,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return Hook::applyFilter('admin_management_product_store', '', $request);
     }
 
     /**
@@ -57,9 +40,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        return Hook::applyFilter('admin_management_product_edit', '', $request, $id);
     }
 
     /**
@@ -71,7 +54,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Hook::applyFilter('admin_management_product_update', '', $request, $id);
     }
 
     /**
@@ -80,8 +63,8 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        return Hook::applyFilter('admin_management_product_destroy', '', $request, $id);
     }
 }

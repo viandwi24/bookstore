@@ -14,7 +14,7 @@ class ThemeEditorServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        a
+        
     }
 
     /**

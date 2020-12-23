@@ -4,7 +4,6 @@
         "ThemeEditor"
     ],
     "active": [
-        "AdminManagement",
-        "ThemeEditor"
+        "AdminManagement"
     ]
 }
