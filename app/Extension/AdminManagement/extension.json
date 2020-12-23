@@ -1,0 +1,10 @@
+{
+    "name": "Basic Mangement For Admin Dashboard",
+    "description": "Plugin for management your Store in Admin Dashboard.",
+    "version": "1.0.0",
+    "author": {
+        "name": "viandwi24",
+        "site": "viandwi24.github.io"
+    },
+    "provider": "AdminManagementServiceProvider"
+}

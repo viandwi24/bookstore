@@ -1,0 +1,10 @@
+{
+    "list": [
+        "AdminManagement",
+        "ThemeEditor"
+    ],
+    "active": [
+        "AdminManagement",
+        "ThemeEditor"
+    ]
+}
