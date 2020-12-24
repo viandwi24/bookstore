@@ -12,6 +12,7 @@ class WrapperServiceProvider
     public $provider_file_path;
     public $service_provider;
     public $provider;
+    public $provider_namespace;
 
     /**
      * Construct
@@ -25,6 +26,7 @@ class WrapperServiceProvider
         $this->provider_file_path = $this->path . '/' . $extension . '/' . $provider_file;
         $this->provider = $this->construct();
         $this->service_provider = app()->make($this->provider);
+        $this->provider_namespace = "\\Extension\\{$this->extension}\\{$this->provider_file}";
     }
 
     /**
@@ -37,7 +39,8 @@ class WrapperServiceProvider
         $name = 'extension.' . $this->extension;
         $provider_file = $this->provider_file_path . '.php';
         $provider_class = $this->provider_file;
-        $provider_namespace = "\\Extension\\{$this->extension}\\{$provider_class}";
+        $this->provider_namespace = "\\Extension\\{$this->extension}\\{$this->provider_file}";
+        $provider_namespace = $this->provider_namespace;
 
         // check service provider is class
         if (!class_exists($provider_namespace)) {
@@ -60,6 +63,10 @@ class WrapperServiceProvider
      */
     public function register()
     {
+        $provider = $this->provider_namespace;
+        $result = new $provider();
+        // dd($result);
+        // return app()->register($provider);
         return app()->make($this->provider)->register();
     }
 

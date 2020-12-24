@@ -1,8 +1,15 @@
 @extends('layouts.admin')
 
+@php
+    $breadcrumb = [
+        [ 'text' => 'Management' ],
+        [ 'text' => 'Product' ]
+];
+@endphp
+
 @section('content')
     <x-admin-content-wrapper>
-        <x-admin-content-header :title="'Management Product'" />
+        <x-admin-content-header :title="'Management Product'" :breadcrumb="$breadcrumb" />
         <x-admin-content-main>
             <div class="card">
                 <div class="card-header">

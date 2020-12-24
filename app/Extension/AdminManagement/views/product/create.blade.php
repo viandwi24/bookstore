@@ -1,8 +1,16 @@
 @extends('layouts.admin')
 
+@php
+    $breadcrumb = [
+        [ 'text' => 'Management' ],
+        [ 'text' => 'Product', 'url' => route('admin.management.product.index') ],
+        [ 'text' => 'Create' ]
+];
+@endphp
+
 @section('content')
     <x-admin-content-wrapper>
-        <x-admin-content-header :title="'Add New Product'" />
+        <x-admin-content-header :title="'Add New Product'" :breadcrumb="$breadcrumb" />
         <x-admin-content-main>
             <form action="{{ route('admin.management.product.store') }}" method="POST">
                 @csrf
@@ -15,16 +23,32 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" name="name" id="name" class="form-control">
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>Price</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">{{ env('CURRENCY_SYMBOL', '$') }}</span>
+                                                </div>
+                                                <input type="number" name="price" id="price" class="form-control" value="{{ old('price', 0) }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>Stock</label>
+                                            <div class="input-group mb-3">
+                                                <input type="number" name="stock" id="stock" class="form-control" min="1" value="{{ old('stock', 1) }}">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Price</label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">{{ env('CURRENCY_SYMBOL', '$') }}</span>
-                                        </div>
-                                        <input type="number" name="price" id="price" class="form-control">
-                                    </div>
+                                    <label>Description</label>
+                                    <textarea name="description" class="summernote-editor">{{ old('description') }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Images Preview</label>
@@ -52,6 +76,9 @@
 @stop
 
 @push('scripts')
+    <!-- Summernote -->
+    <script src="{{ asset('assets/adminlte3/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <!-- images-uploader -->
     <script>
         function randChar(length) {
             var result           = '';
@@ -108,16 +135,23 @@
             newInput.addClass(`input-${rand}`);
             newInput.attr("name", `${inputName}[]`);
         });
+
+        $(function () {
+            $('.summernote-editor').summernote();
+        });
     </script>
 @endpush
 
 @push('styles')
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ asset('assets/adminlte3/plugins/summernote/summernote-bs4.min.css') }}">
+    <!-- images-uploader -->
     <style>
         .images-uploader .images-container {
             width: 100%;
             height: 100px;
             border: 1px solid red;
-            overflow-y: auto;
+            overflow-x: auto;
             display: flex;
             align-items: center;
             padding: 5px;
@@ -130,6 +164,7 @@
             width: 100px;
             border: 1px solid gray;
             outline: none;
+            margin-right: 5px;
         }
         .images-uploader .images-container .image-block {
             height: 100%;
